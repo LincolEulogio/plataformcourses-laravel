@@ -18,7 +18,7 @@ class CourseController extends Controller
      */
     public function index()
     {
-        $courses = Course::where('user_id', auth()->id())->get();
+        $courses = Course::where('user_id', Auth::id())->first()->paginate(6);
         return view('instructor.courses.index', compact('courses'));
     }
 
@@ -47,19 +47,20 @@ class CourseController extends Controller
             'price_id' => ['required', 'exists:prices,id'],
         ]);
 
-        $data['user_id'] = auth()->id();
+        $data['user_id'] = Auth::id();
 
         $course = Course::create($data);
 
         return redirect()->route('instructor.courses.index')->with('success', 'Curso creado correctamente.');
     }
 
+
     /**
      * Display the specified resource.
      */
     public function show(Course $course)
     {
-        //
+        return view('instructor.courses.show', compact('course'));
     }
 
     /**
@@ -67,7 +68,11 @@ class CourseController extends Controller
      */
     public function edit(Course $course)
     {
-        //
+        $categories = Category::all();
+        $levels = Level::all();
+        $prices = Price::all();
+
+        return view('instructor.courses.edit', compact('course', 'categories', 'levels', 'prices'));
     }
 
     /**
@@ -75,7 +80,17 @@ class CourseController extends Controller
      */
     public function update(Request $request, Course $course)
     {
-        //
+        $data = $request->validate([
+            'title' => ['required', 'string', 'max:255'],
+            'slug' => ['nullable', 'string', 'max:255', 'unique:courses,slug'],
+            'category_id' => ['required', 'exists:categories,id'],
+            'level_id' => ['required', 'exists:levels,id'],
+            'price_id' => ['required', 'exists:prices,id'],
+        ]);
+
+        $course->update($data);
+
+        return redirect()->route('instructor.courses.index')->with('success', 'Curso actualizado correctamente.');
     }
 
     /**
@@ -83,6 +98,8 @@ class CourseController extends Controller
      */
     public function destroy(Course $course)
     {
-        //
+        $course->delete();
+
+        return redirect()->route('instructor.courses.index')->with('success', 'Curso eliminado correctamente.');
     }
 }

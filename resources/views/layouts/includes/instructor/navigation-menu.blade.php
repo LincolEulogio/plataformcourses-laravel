@@ -5,11 +5,6 @@
             'route' => route('instructor.courses.index'),
             'active' => request()->routeIs('instructor.courses.index'),
         ],
-        [
-            'name' => 'Estudiantes',
-            'route' => '#',
-            'active' => false,
-        ],
     ];
 @endphp
 

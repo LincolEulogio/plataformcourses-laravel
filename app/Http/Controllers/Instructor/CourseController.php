@@ -18,7 +18,7 @@ class CourseController extends Controller
      */
     public function index()
     {
-        $courses = Course::where('user_id', Auth::id())->first()->paginate(6);
+        $courses = Course::where('user_id', Auth::id())->paginate(6);
         return view('instructor.courses.index', compact('courses'));
     }
 

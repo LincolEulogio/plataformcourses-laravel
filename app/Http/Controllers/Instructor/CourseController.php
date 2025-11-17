@@ -82,14 +82,26 @@ class CourseController extends Controller
     {
         $data = $request->validate([
             'title' => ['required', 'string', 'max:255'],
-            'slug' => ['nullable', 'string', 'max:255', 'unique:courses,slug'],
+            'slug' => ['nullable', 'string', 'max:255', 'unique:courses,slug,' . $course->id],
+            'summary' => ['nullable', 'string'],
+            'description' => ['nullable', 'string'],
             'category_id' => ['required', 'exists:categories,id'],
             'level_id' => ['required', 'exists:levels,id'],
             'price_id' => ['required', 'exists:prices,id'],
         ]);
 
+        if($request->hasFile('image')){
+           if($course->image_path){
+               Storage::delete($course->image_path);
+           }
+           $data['image_path'] = Storage::put('courses/images', $request->file('image'));
+        }
+
         $course->update($data);
 
+        // session()
+        session()->flash('flash.banner', 'Curso actualizado correctamente.');
+        session()->flash('flash.bannerStyle', 'success');
         return redirect()->route('instructor.courses.index')->with('success', 'Curso actualizado correctamente.');
     }
 

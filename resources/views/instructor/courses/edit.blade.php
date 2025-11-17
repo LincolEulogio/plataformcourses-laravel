@@ -17,7 +17,7 @@
             <aside class="col-span-12 md:col-span-4 space-y-8 p-6 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
                 <div>
                     <h3
-                        class="text-xl font-semibold text-gray-700 dark:text-white border-l-4 border-blue-500 pl-3 mb-1">
+                        class="text-xl font-semibold text-gray-700 dark:text-white border-l-4 border-blue-500 pl-2 mb-1">
                         Editar Información del Curso:
                     </h3>
                     <p class="text-gray-600 dark:text-gray-300 text-xs">Modifica los datos del curso según sea
@@ -25,7 +25,7 @@
                 </div>
                 <div>
                     <h3
-                        class="text-xl font-semibold text-gray-700 dark:text-white border-l-4 border-blue-500 pl-3 mb-1">
+                        class="text-xl font-semibold text-gray-700 dark:text-white border-l-4 border-blue-500 pl-2 mb-1">
                         Video Promocional:
                     </h3>
                     <p class="text-gray-600 dark:text-gray-300 text-xs">Modifica el video promocional del curso según
@@ -33,7 +33,7 @@
                 </div>
                 <div>
                     <h3
-                        class="text-xl font-semibold text-gray-700 dark:text-white border-l-4 border-blue-500 pl-3 mb-1">
+                        class="text-xl font-semibold text-gray-700 dark:text-white border-l-4 border-blue-500 pl-2 mb-1">
                         Imagen Publicidad:
                     </h3>
                     <p class="text-gray-600 dark:text-gray-300 text-xs">Modifica la imagen de publicidad del curso según
@@ -41,7 +41,7 @@
                 </div>
                 <div>
                     <h3
-                        class="text-xl font-semibold text-gray-700 dark:text-white border-l-4 border-blue-500 pl-3 mb-1">
+                        class="text-xl font-semibold text-gray-700 dark:text-white border-l-4 border-blue-500 pl-2 mb-1">
                         Metas del Curso:
                     </h3>
                     <p class="text-gray-600 dark:text-gray-300 text-xs">Modifica las metas del curso según sea
@@ -49,7 +49,7 @@
                 </div>
                 <div>
                     <h3
-                        class="text-xl font-semibold text-gray-700 dark:text-white border-l-4 border-blue-500 pl-3 mb-1">
+                        class="text-xl font-semibold text-gray-700 dark:text-white border-l-4 border-blue-500 pl-2 mb-1">
                         Requerimientos del Curso:
                     </h3>
                     <p class="text-gray-600 dark:text-gray-300 text-xs">Modifica los requerimientos del curso según sea
@@ -57,7 +57,7 @@
                 </div>
                 <div>
                     <h3
-                        class="text-xl font-semibold text-gray-700 dark:text-white border-l-4 border-blue-500 pl-3 mb-1">
+                        class="text-xl font-semibold text-gray-700 dark:text-white border-l-4 border-blue-500 pl-2 mb-1">
                         Lecciones del Curso:
                     </h3>
                     <p class="text-gray-600 dark:text-gray-300 text-xs">Modifica las lecciones del curso según sea
@@ -65,7 +65,7 @@
                 </div>
                 <div>
                     <h3
-                        class="text-xl font-semibold text-gray-700 dark:text-white border-l-4 border-blue-500 pl-3 mb-1">
+                        class="text-xl font-semibold text-gray-700 dark:text-white border-l-4 border-blue-500 pl-2 mb-1">
                         Mensajes:
                     </h3>
                     <p class="text-gray-600 dark:text-gray-300 text-xs">Modifica los mensajes del curso según sea
@@ -73,7 +73,7 @@
                 </div>
                 <div>
                     <h3
-                        class="text-xl font-semibold text-gray-700 dark:text-white border-l-4 border-blue-500 pl-3 mb-1">
+                        class="text-xl font-semibold text-gray-700 dark:text-white border-l-4 border-blue-500 pl-2 mb-1">
                         Cupones:
                     </h3>
                     <p class="text-gray-600 dark:text-gray-300 text-xs">Modifica los cupones del curso según sea
@@ -93,6 +93,7 @@
 
                     <x-validation-errors class="mb-4" />
 
+                    {{-- Titulo del curso --}}
                     <div class="flex flex-col">
                         <div>
                             <x-label for="title" value="Nombre del Curso" class="mb-2" />
@@ -101,6 +102,7 @@
                                 oninput="generateSlug(this.value)" />
                         </div>
                     </div>
+                    {{-- Slug del curso --}}
                     <div class="flex flex-col mt-4">
                         <div>
                             <x-label for="slug" value="Slug del Curso" class="mb-2" />
@@ -108,6 +110,26 @@
                                 value="{{ old('slug', $course->slug) }}" id="slug" />
                         </div>
                     </div>
+                    {{-- Resumen del curso --}}
+                    <div class="flex flex-col mt-4">
+                        <div>
+                            <x-label for="summary" value="Resumen del Curso" class="mb-2" />
+                            <x-textarea for="summary" placeholder="Resumen del Curso" name="summary" class="mb-2 w-full"
+                                value="{{ old('summary', $course->summary) }}" id="summary">
+                            </x-textarea>
+                        </div>
+                    </div>
+                    {{-- Descripción del curso --}}
+                    <div class="flex flex-col mt-4 mb-4">
+                        <div>
+                            <x-label for="description" value="Descripción del Curso" class="mb-2" />
+                            <x-textarea for="description" placeholder="Descripción del Curso" name="description"
+                                class="mb-2 w-full" value="{{ old('description', $course->description) }}"
+                                id="description" >
+                            </x-textarea>
+                        </div>
+                    </div>
+                    {{-- Categoría, Nivel y Precio --}}
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div>
                             <x-label for="category_id" value="Categoría" class="mb-2" />
@@ -155,39 +177,37 @@
                             </x-select>
                         </div>
                     </div>
+                    {{-- Imagen del curso --}}
                     <div class="mt-6">
-
-                        {{-- Label --}}
                         <x-label for="file" value="Imagen del Curso"
                             class="mb-2 font-semibold text-gray-800 dark:text-gray-200" />
-
-                        {{-- Zona de subida --}}
-                        <label for="file" class="flex flex-col items-center justify-center w-full h-40 border-2 border-dashed 
+                        <div class="flex flex-col md:flex-row md:justify-between md:items-center md:space-x-6">
+                            {{-- Input file de subida de imagen --}}
+                            <div class="flex-1 md:my-0">
+                                <x-label for="file" class="flex flex-col items-center justify-center w-full h-40 border-2 border-dashed 
                border-gray-300 dark:border-gray-600 rounded-xl cursor-pointer 
                hover:border-blue-400 transition p-4 bg-gray-50 dark:bg-gray-800/50">
-                            <div class="flex flex-col items-center">
-                                <svg class="w-10 h-10 text-gray-400 dark:text-gray-500" fill="none"
-                                    stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-9 3v-13m0 0L7.5 9m4.5-5.5L16.5 9" />
-                                </svg>
-                                <p class="mt-2 text-gray-600 dark:text-gray-300 text-sm">
-                                    Haz clic para subir o arrastra una imagen
-                                </p>
+                                    <div class="flex flex-col items-center">
+                                        <span class="text-3xl"><i class="fa-solid fa-cloud-arrow-up"></i></span>
+                                        <p class="mt-2 text-gray-600 dark:text-gray-300 text-sm">
+                                            Haz clic para subir o arrastra una imagen
+                                        </p>
+                                    </div>
+                                    <x-input type="file" name="image" id="file" class="hidden" accept="image/*" />
+                                </x-label>
                             </div>
-                            <x-input type="file" name="file" id="file" class="hidden" />
-                        </label>
-
-                        {{-- Imagen actual --}}
-                        <div class="my-6">
-                            <p class="text-gray-700 dark:text-gray-300 font-medium mb-2">Imagen Actual:</p>
-                            <div
-                                class="w-64 rounded-xl overflow-hidden shadow-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
-                                <img src="{{ $course->image ?? '#' }}" alt="Imagen del Curso"
-                                    class="w-full h-auto object-cover">
+                            {{-- Imagen actual --}}
+                            <div class="my-6 flex-1 md:my-0">
+                                <p class="text-gray-700 dark:text-gray-300 font-medium mb-2">Imagen Actual:</p>
+                                <div
+                                    class="w-64 rounded-xl overflow-hidden shadow-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
+                                    <figure>
+                                        <img src="{{ $course->image }}" alt="Imagen del Curso"
+                                            class="w-full h-auto object-cover" />
+                                    </figure>
+                                </div>
                             </div>
                         </div>
-
                     </div>
 
                     <div class="flex flex-col md:flex-row md:max-w-sm gap-4 mt-4">
@@ -205,9 +225,16 @@
         </div>
     </x-contenido>
 
-</x-instructor-layout>
-
-<script>
+    @push('js')
+    <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#description'))
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
+    <script>
     // Función para generar el slug automáticamente
     function generateSlug(text) {
         // Convierte a minúsculas
@@ -227,3 +254,6 @@
     }
 
 </script>
+    @endpush
+</x-instructor-layout>
+

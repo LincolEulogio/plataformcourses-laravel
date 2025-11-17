@@ -13,12 +13,6 @@
     </x-slot>
     <x-contenido class="py-12" width="7xl">
         <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-3 md:p-6">
-            @if (session('success'))
-            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4" role="alert">
-                <span class="block sm:inline">{{ session('success') }}</span>
-            </div>
-            @endif
-
             {{-- Lista de cursos --}}
             @if ($courses->isEmpty())
             <p class="text-gray-700 dark:text-gray-300">No tienes cursos creados aún.</p>
@@ -94,7 +88,7 @@
                         {{-- Categoría + nivel --}}
                         <p class="text-[12px] text-gray-500 dark:text-gray-400 mb-2">
                             {{ $course->category->name }} •
-                            {{ $course->user ? $course->user->name : 'Usuario no disponible' }}
+                            {{ $course->level->name }}
                         </p>
 
                         {{-- Inscritos + íconos estáticos (abajo a la derecha) --}}

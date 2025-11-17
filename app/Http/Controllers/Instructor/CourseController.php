@@ -10,6 +10,7 @@ use App\Models\Level;
 use App\Models\Price;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class CourseController extends Controller
 {
@@ -45,9 +46,14 @@ class CourseController extends Controller
             'category_id' => ['required', 'exists:categories,id'],
             'level_id' => ['required', 'exists:levels,id'],
             'price_id' => ['required', 'exists:prices,id'],
+            'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,webp', 'max:2048'],
         ]);
 
         $data['user_id'] = Auth::id();
+
+        if($request->hasFile('image')){
+           $data['image_path'] = Storage::disk('public')->put('courses/images', $request->file('image'));
+        }
 
         $course = Course::create($data);
 
@@ -88,18 +94,18 @@ class CourseController extends Controller
             'category_id' => ['required', 'exists:categories,id'],
             'level_id' => ['required', 'exists:levels,id'],
             'price_id' => ['required', 'exists:prices,id'],
+            'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,webp', 'max:2048'],
         ]);
 
         if($request->hasFile('image')){
            if($course->image_path){
-               Storage::delete($course->image_path);
+               Storage::disk('public')->delete($course->image_path);
            }
-           $data['image_path'] = Storage::put('courses/images', $request->file('image'));
+           $data['image_path'] = Storage::disk('public')->put('courses/images', $request->file('image'));
         }
 
         $course->update($data);
 
-        // session()
         session()->flash('flash.banner', 'Curso actualizado correctamente.');
         session()->flash('flash.bannerStyle', 'success');
         return redirect()->route('instructor.courses.index')->with('success', 'Curso actualizado correctamente.');

@@ -125,7 +125,7 @@
                             <x-label for="description" value="Descripción del Curso" class="mb-2" />
                             <x-textarea for="description" placeholder="Descripción del Curso" name="description"
                                 class="mb-2 w-full" value="{{ old('description', $course->description) }}"
-                                id="description" >
+                                id="description">
                             </x-textarea>
                         </div>
                     </div>
@@ -137,7 +137,7 @@
                                 <option value="" disabled {{ old('category_id') ? '' : 'selected' }}>Seleccione una
                                     categoría</option>
                                 @foreach ($categories as $category)
-                                <option value="{{ $category->id }} " {{ old('category_id', $course->category_id) ==
+                                <option value="{{ $category->id }}" {{ old('category_id', $course->category_id) ==
                                     $category->id ? 'selected' : '' }}>
                                     {{ $category->name }}
                                 </option>
@@ -196,13 +196,13 @@
                                     <x-input type="file" name="image" id="file" class="hidden" accept="image/*" />
                                 </x-label>
                             </div>
-                            {{-- Imagen actual --}}
+                            {{-- Previsualización de imagen --}}
                             <div class="my-6 flex-1 md:my-0">
-                                <p class="text-gray-700 dark:text-gray-300 font-medium mb-2">Imagen Actual:</p>
+                                <p class="text-gray-700 dark:text-gray-300 font-medium mb-2">Previsualización:</p>
                                 <div
                                     class="w-64 rounded-xl overflow-hidden shadow-md border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
                                     <figure>
-                                        <img src="{{ $course->image }}" alt="Imagen del Curso"
+                                        <img id="previewImage" src="{{ $course->image }}" alt="Previsualización"
                                             class="w-full h-auto object-cover" />
                                     </figure>
                                 </div>
@@ -235,25 +235,35 @@
             });
     </script>
     <script>
-    // Función para generar el slug automáticamente
-    function generateSlug(text) {
-        // Convierte a minúsculas
-        let slug = text.toLowerCase();
+        // Función para generar el slug automáticamente
+        function generateSlug(text) {
+            // Convierte a minúsculas
+            let slug = text.toLowerCase();
 
-        // Elimina acentos y caracteres diacríticos
-        slug = slug.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+            // Elimina acentos y caracteres diacríticos
+            slug = slug.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 
-        // Reemplaza espacios y caracteres especiales por guiones
-        slug = slug.replace(/[^a-z0-9]+/g, '-');
+            // Reemplaza espacios y caracteres especiales por guiones
+            slug = slug.replace(/[^a-z0-9]+/g, '-');
 
-        // Elimina guiones al inicio y final
-        slug = slug.replace(/^-+|-+$/g, '');
+            // Elimina guiones al inicio y final
+            slug = slug.replace(/^-+|-+$/g, '');
 
-        // Actualiza el campo slug
-        document.getElementById('slug').value = slug;
-    }
+            // Actualiza el campo slug
+            document.getElementById('slug').value = slug;
+        }
 
-</script>
+        // Función para previsualizar la imagen
+        document.getElementById('file').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('previewImage').src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
     @endpush
 </x-instructor-layout>
-
